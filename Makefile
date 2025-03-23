@@ -6,7 +6,7 @@
 #    By: moben-ta <moben-ta@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/09 13:43:14 by moben-ta          #+#    #+#              #
-#    Updated: 2025/03/19 11:54:59 by moben-ta         ###   ########.fr        #
+#    Updated: 2025/03/23 13:23:52 by moben-ta         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ GNLOBJ = $(GNL:%.c=%.o)
 PRTFOBJ = $(PRTFSRC:%.c=%.o)
 
 
-all: $(NAME)
+all: run_setup $(NAME)
 	@echo "$(GREEN)✅ Done!$(RESET)"
 
 $(NAME): $(OBJ) $(GNLOBJ) $(PRTFOBJ)
@@ -48,13 +48,17 @@ $(NAME): $(OBJ) $(GNLOBJ) $(PRTFOBJ)
 	$(CC) $(CFLAGS) -framework Cocoa -framework OpenGL -framework IOKit -L/Users/moben-ta/Desktop/MLX42/ -lglfw3 \
 	$(OBJ) $(GNLOBJ) ft_printf/libftprintf.a $(MLX) -o $@
 
-bonus: $(BNAME)
+bonus: run_setup $(BNAME)
 	@echo "$(GREEN)✅ Done!$(RESET)"
 
 $(BNAME): $(BNOBJ) $(GNLOBJ) $(PRTFOBJ)
 	@echo "$(YELLOW) Compiling so_long_bonus...$(RESET)"
 	$(CC) $(CFLAGS) -framework Cocoa -framework OpenGL -framework IOKit -L/Users/moben-ta/Desktop/MLX42/ -lglfw3 \
 	$(BNOBJ) $(GNLOBJ) ft_printf/libftprintf.a $(MLX) -o $@
+
+run_setup:
+	@echo "$(YELLOW)🔧 Running setup...$(RESET)"
+	@./setup.sh || { echo "$(RED)❌ Setup failed!$(RESET)"; exit 1; }
 
 mandatory/%.o: mandatory/%.c mandatory/so_long.h
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -78,6 +82,7 @@ clean:
 fclean: clean
 	@${MAKE} -C ft_printf fclean
 	rm -rf $(NAME) $(BNAME)
+	rm -rf MLX42
 
 re: fclean all
 
