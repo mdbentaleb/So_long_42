@@ -6,7 +6,7 @@
 #    By: moben-ta <moben-ta@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/09 13:43:14 by moben-ta          #+#    #+#              #
-#    Updated: 2025/03/23 15:42:48 by moben-ta         ###   ########.fr        #
+#    Updated: 2025/03/23 15:46:08 by moben-ta         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,8 +62,7 @@ bonus: run_setup $(BNAME)
 
 $(BNAME): $(BNOBJ) $(GNLOBJ) $(PRTFOBJ)
 	@echo "$(YELLOW) Compiling so_long_bonus...$(RESET)"
-	$(CC) $(CFLAGS) $(LIBFLAGS)\
-	$(BNOBJ) $(GNLOBJ) $(PRTFLIB) $(MLX) -o $@
+	$(CC) $(CFLAGS) $(LIBFLAGS) $(BNOBJ) $(GNLOBJ) $(PRTFLIB) $(MLX) -o $@
 
 run_setup:
 	@echo "$(YELLOW)🔧 Running setup...$(RESET)"
