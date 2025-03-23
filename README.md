@@ -46,7 +46,7 @@ After cloning the repository, you can compile and run the game using the followi
      ```
   2. Run the game with a map:
      ```bash
-     ./so_long_bonus maps/map.ber
+     ./so_long_bonus maps/map_bonus.ber
      ```
 
 This setup allows you to choose between the mandatory version and the bonus version of the game.
