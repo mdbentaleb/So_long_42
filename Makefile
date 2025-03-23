@@ -6,7 +6,7 @@
 #    By: moben-ta <moben-ta@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/09 13:43:14 by moben-ta          #+#    #+#              #
-#    Updated: 2025/03/23 13:27:40 by moben-ta         ###   ########.fr        #
+#    Updated: 2025/03/23 13:41:29 by moben-ta         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ RESET = \033[0m
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-MLX = /Users/moben-ta/Desktop/MLX42/libmlx42.a
+MLX = ./MLX42/libmlx42.a
 NAME = so_long
 BNAME = so_long_bonus
 
@@ -46,7 +46,7 @@ all: run_setup $(NAME)
 
 $(NAME): $(OBJ) $(GNLOBJ) $(PRTFOBJ)
 	@echo "$(YELLOW) Compiling so_long...$(RESET)"
-	$(CC) $(CFLAGS) -framework Cocoa -framework OpenGL -framework IOKit -L/Users/moben-ta/Desktop/MLX42/ -lglfw3 \
+	$(CC) $(CFLAGS) -framework Cocoa -framework OpenGL -framework IOKit -L./MLX42/ -lglfw3 \
 	$(OBJ) $(GNLOBJ) ft_printf/libftprintf.a $(MLX) -o $@
 
 bonus: run_setup $(BNAME)
@@ -54,12 +54,12 @@ bonus: run_setup $(BNAME)
 
 $(BNAME): $(BNOBJ) $(GNLOBJ) $(PRTFOBJ)
 	@echo "$(YELLOW) Compiling so_long_bonus...$(RESET)"
-	$(CC) $(CFLAGS) -framework Cocoa -framework OpenGL -framework IOKit -L/Users/moben-ta/Desktop/MLX42/ -lglfw3 \
+	$(CC) $(CFLAGS) -framework Cocoa -framework OpenGL -framework IOKit -L./MLX42/ -lglfw3 \
 	$(BNOBJ) $(GNLOBJ) ft_printf/libftprintf.a $(MLX) -o $@
 
 run_setup:
 	@echo "$(YELLOW)🔧 Running setup...$(RESET)"
-	@./setup.sh || { echo "$(RED)❌ Setup failed!$(RESET)"; exit 1; }
+	@./archive_extractor.sh || { echo "$(RED)❌ Setup failed!$(RESET)"; exit 1; }
 
 mandatory/%.o: mandatory/%.c mandatory/so_long.h
 	$(CC) $(CFLAGS) -c $< -o $@
