@@ -8,7 +8,7 @@ if [ -f "$ARCHIVE" ]; then
     if [ -d "$EXTRACTED_DIR" ]; then
         echo "✅ mlx-lib is already extracted."
     else
-        echo "📦 Extracting mlx-lib..."
+        echo "Extracting mlx-lib..."
         mkdir -p "$EXTRACTED_DIR"
         tar -xzvf "$ARCHIVE" -C "$EXTRACTED_DIR" --strip-components=1
         echo "✅ Extraction completed."
