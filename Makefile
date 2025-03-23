@@ -6,7 +6,7 @@
 #    By: moben-ta <moben-ta@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/09 13:43:14 by moben-ta          #+#    #+#              #
-#    Updated: 2025/03/23 13:41:29 by moben-ta         ###   ########.fr        #
+#    Updated: 2025/03/23 15:42:48 by moben-ta         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ CFLAGS = -Wall -Wextra -Werror
 MLX = ./MLX42/libmlx42.a
 NAME = so_long
 BNAME = so_long_bonus
+PRTFLIB = ft_printf/libftprintf.a
 
 SRCS = mandatory/so_long.c mandatory/utils/utils.c mandatory/utils/parsing.c \
 		mandatory/utils/ft_split.c mandatory/utils/ft_game.c mandatory/utils/ft_game_utils.c \
@@ -40,22 +41,29 @@ BNOBJ = $(SRCSB:%.c=%.o)
 GNLOBJ = $(GNL:%.c=%.o)
 PRTFOBJ = $(PRTFSRC:%.c=%.o)
 
+UNAME = $(shell uname)
+
+ifeq ($(UNAME), Linux)
+	LIBFLAGS = -Iinclude -L./MLX42/build -lmlx42 -L./MLX42/build -lglfw -L./ft_printf -lftprintf \
+        -lGL -lm -lpthread -ldl
+else ifeq ($(UNAME), Darwin)
+	LIBFLAGS = -framework Cocoa -framework OpenGL -framework IOKit -L./MLX42/ -lglfw3
+endif
 
 all: run_setup $(NAME)
 	@echo "$(GREEN)✅ Done!$(RESET)"
 
 $(NAME): $(OBJ) $(GNLOBJ) $(PRTFOBJ)
 	@echo "$(YELLOW) Compiling so_long...$(RESET)"
-	$(CC) $(CFLAGS) -framework Cocoa -framework OpenGL -framework IOKit -L./MLX42/ -lglfw3 \
-	$(OBJ) $(GNLOBJ) ft_printf/libftprintf.a $(MLX) -o $@
+	$(CC) $(CFLAGS) $(LIBFLAGS) $(OBJ) $(GNLOBJ) $(PRTFLIB) $(MLX) -o $@
 
 bonus: run_setup $(BNAME)
 	@echo "$(GREEN)✅ Done!$(RESET)"
 
 $(BNAME): $(BNOBJ) $(GNLOBJ) $(PRTFOBJ)
 	@echo "$(YELLOW) Compiling so_long_bonus...$(RESET)"
-	$(CC) $(CFLAGS) -framework Cocoa -framework OpenGL -framework IOKit -L./MLX42/ -lglfw3 \
-	$(BNOBJ) $(GNLOBJ) ft_printf/libftprintf.a $(MLX) -o $@
+	$(CC) $(CFLAGS) $(LIBFLAGS)\
+	$(BNOBJ) $(GNLOBJ) $(PRTFLIB) $(MLX) -o $@
 
 run_setup:
 	@echo "$(YELLOW)🔧 Running setup...$(RESET)"
